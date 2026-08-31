@@ -1,110 +1,41 @@
+
 <?php
-
-require_once "m/gatoCRUD.php";
-require_once "m/racaCRUD.php";
-
-$CdGato = isset($_GET['CdGato'])
-    ? (int) $_GET['CdGato']
-    : 0;
-
-$NmGato = '';
-$Raca = '';
-$Preco = '';
-$Descricao = '';
-$Foto = '';
-
-if ($CdGato > 0) {
-
-    $gato = recuperarGatoPorId($CdGato);
-
-    if (!$gato) {
-        header("Location: gatoTabela.php");
-        exit;
-    }
-
-    $NmGato = $gato['NmGato'] ?? '';
-    $Raca = $gato['Raca'] ?? '';
-    $Preco = $gato['Preco'] ?? '';
-    $Descricao = $gato['Descricao'] ?? '';
-    $Foto = $gato['foto'] ?? '';
-}
-
-$racas = listarRaca();
-
+	include "m/gatomodel.php";
+	include_once "menu.php";
 ?>
 
-<!DOCTYPE html>
-<html lang="pt-BR">
 
-<head>
 
-    <meta charset="utf-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <title>
-        <?= $CdGato > 0 ? 'Editar Gato' : 'Cadastrar Gato' ?>
-    </title>
-
-    <link
-        rel="stylesheet"
-        href="css/bootstrap.css"
-    >
-
-    <link
-        rel="stylesheet"
-        href="css/estilos.css"
-    >
-
-</head>
-
-<body>
-
-<?php require_once "menu.php"; ?>
-
-<div class="container mt-4">
-
-    <h1>
-        <?= $CdGato > 0 ? 'Editar Gato' : 'Cadastrar Gato' ?>
-    </h1>
-
-    <hr>
-
-    <form
-        action="c/gatoSalvar.php"
-        method="post"
-        enctype="multipart/form-data"
-        id="formulario"
-    >
-
-        <input
-            type="hidden"
-            name="CdGato"
-            value="<?= $CdGato ?>"
-        >
-
-        <div class="mb-3">
-
-            <label
-                for="NmGato"
-                class="form-label"
-            >
-                Nome do gato
-            </label>
-
-            <input
-                type="text"
-                class="form-control"
-                id="NmGato"
-                name="NmGato"
-                value="<?= htmlspecialchars($NmGato) ?>"
-                maxlength="100"
-                required
-            >
-
-        </div>
-
-        <div class="mb-3">
+	<html>
+		<head>
+			<meta charset="utf-8"/>
+			<title> Cadastro Gato </title>
+			<link type="text/css" rel="stylesheet" href="css/bootstrap.css"/>
+			<link type="text/css" rel="stylesheet" href="css/estilos.css"/>	
+		</head>
+		<body>
+		<img alt="lamp" src="https://i.postimg.cc/brDfYfj1/pink.gif" style="" title="" class="lamp">
+		<div class="container">
+				<br>
+				<h1 class="henny-penny-regular fonteClara">Cadastro do Gato</h1>
+				<br>
+				<img alt="caveira" src="https://i.postimg.cc/hPxn9BLk/IMG_8818.png" style="" title="" class="iconeTitulo">		
+					
+				<br>
+			<form id="formularioGato" action="gatoSalvar.php" method="post" enctype="multipart/form-data">
+					
+				<div id="esquerda">
+					<div>
+						<input type="hidden" id="CdGato" name="CdGato" value="<? echo $CdGato ?>">
+					</div>
+					<div class="row form-group">
+						<div class="col-md-12">
+							<label for="NmGato">Nome</label>  
+							<input class="form-control" id="NmGato" name="NmGato" value="<? echo $NmGato ?>" 
+							type="text" placeholder="Informe o nome do Gato">
+						</div>	
+					</div>
+					<div class="row form-group">
 
             <label
                 for="Raca"
@@ -114,7 +45,7 @@ $racas = listarRaca();
             </label>
 
             <select
-                class="form-select"
+                class="form-select form-control"
                 id="Raca"
                 name="Raca"
                 required
@@ -138,111 +69,52 @@ $racas = listarRaca();
             </select>
 
         </div>
+					</div>
+					<div class="row form-group">
+						<div class="col-md-12">
+							<label for="Preco">Preço</label>  
+							<div class="input-group mb-3">
+        						<span class="input-group-text">R$</span>
+								<input class="form-control" id="Preco" name="Preco" value="<? if ($Preco > 0) echo $Preco ?>" 
+								type="text" placeholder="Informe o Preço Gato">
+							</div>
+							<label id="Preco-error" class="error" for="Preco" style=""></label>
+						</div>	
+					</div>	
+				</div>
+				<div id="direita" class="d-flex flex-column justify-content-between">
+					<div class="row form-group">
+						<div class="col-md-12">
+							<label for="Descricao">Descrição</label>  
+							<textarea id="Descricao" name="Descricao" class="form-control" value="" placeholder="Descreva o gato"><? echo $Descricao ?></textarea>
+						</div>	
+					</div>	
+					<div class="row form-group" id="foto">
+						<div class="col-md-12">
+							<label for="arquivoFoto">Foto</label>  						
+							
+							<img id='fotoUsuario' name='fotoUsuario' src='imagens/padrao.png'> 
+						
+							<input type="hidden" class="form-control" id="imagemFoto" name="imagemFoto" value="">
+							<input type="file" class="form-control mt-3" id="arquivoFoto" name="arquivoFoto" onchange="previewImagem()" accept="image/png, image/jpeg, image/jpg">
+						</div>							
+					</div>
+				
+					<div class="row form-group text-end mt-auto">
+						<div class="col-md-12">
+							<button type="submit" class="btn btn-success float-right">Salvar</button>											
+						</div>											
+					</div>	
+				</div>
+			</form>	
+		</div>
 
-        <div class="mb-3">
-
-            <label
-                for="Preco"
-                class="form-label"
-            >
-                Preço
-            </label>
-
-            <input
-                type="number"
-                class="form-control"
-                id="Preco"
-                name="Preco"
-                value="<?= htmlspecialchars($Preco) ?>"
-                min="0"
-                step="0.01"
-                required
-            >
-
-        </div>
-
-        <div class="mb-3">
-
-            <label
-                for="Descricao"
-                class="form-label"
-            >
-                Descrição
-            </label>
-
-            <textarea
-                class="form-control"
-                id="Descricao"
-                name="Descricao"
-                rows="4"
-                maxlength="500"
-            ><?= htmlspecialchars($Descricao) ?></textarea>
-
-        </div>
-
-        <div class="mb-3">
-
-            <label
-                for="foto"
-                class="form-label"
-            >
-                Foto
-            </label>
-
-            <input
-                type="file"
-                class="form-control"
-                id="foto"
-                name="foto"
-                accept="image/jpeg,image/png,image/webp"
-            >
-
-        </div>
-
-        <?php if (!empty($Foto)): ?>
-
-            <div class="mb-3">
-
-                <p>Foto atual:</p>
-
-                <img
-                    src="imagens/<?= htmlspecialchars($Foto) ?>"
-                    alt="Foto de <?= htmlspecialchars($NmGato) ?>"
-                    class="img-thumbnail"
-                    style="max-width: 200px;"
-                >
-
-            </div>
-
-        <?php endif; ?>
-
-        <div class="mt-4">
-
-            <a
-                href="gatoTabela.php"
-                class="btn btn-secondary"
-            >
-                Voltar
-            </a>
-
-            <button
-                type="submit"
-                class="btn btn-success"
-            >
-                Salvar
-            </button>
-
-        </div>
-
-    </form>
-
-</div>
-
-<script src="js/jquery.js"></script>
-<script src="js/bootstrap.js"></script>
-<script src="js/jquery.validate.js"></script>
-<script src="js/gatoFormulario.js"></script>
-
-</body>
-
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/jquery.mask.js"></script>
+		<script type="text/javascript" src="js/jquery.validate.js"></script>
+		<script type="text/javascript" src="js/additional-methods.js"></script>
+		<script type="text/javascript" src="js/localization/messages_pt_BR.js"></script>					
+		<script type="text/javascript" src="js/gatoFormulario.js"></script>				
+	</body>
 </html>

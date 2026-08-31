@@ -64,7 +64,7 @@ if ($idRaca > 0) {
             value="<?= $idRaca ?>"
         >
 
-        <div class="mb-3">
+        <div class="row form-group">
 
             <label for="nmRaca" class="form-label">
                 Nome da raça
@@ -82,7 +82,7 @@ if ($idRaca > 0) {
 
         </div>
 
-        <div class="mb-3">
+        <div class="row form-group">
 
             <label for="descricao" class="form-label">
                 Descrição
