@@ -1,0 +1,138 @@
+@import url('https://fonts.googleapis.com/css2?family=Bonbon&family=Henny+Penny&family=Ruge+Boogie&family=Sunshiney&display=swap');
+
+.error{
+	color: red;
+	font-size: 14px; 
+}
+
+.iconeTitulo{
+	display: block;
+	margin: 0 auto;
+}
+.lamp{
+	display: block;
+	margin: 0 auto;
+	position: fixed;
+	z-index: 100;
+}
+.linkbutton{
+	padding: 3px;
+	background-color: #e1a1ff !important;
+	color: rgb(99, 71, 30) !important;
+}
+#formularioGato{
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	grid-template-areas: "esquerda direita";
+	gap: 20px;
+}
+
+#formulario {
+	width: 80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#foto{
+	grid-area: foto;
+}
+
+#esquerda{
+	grid-area: esquerda;
+}
+#direita{
+	grid-area: direita;
+}
+
+#tabela_info{
+	color: #e7b4ff; 
+}
+
+.inputTabelaCustom{
+	background-color: rgba(255, 255, 255, 1);
+}
+
+#fotoUsuario{
+	width: 150px;
+	height: 150px;
+	margin-left: calc(50% - 75px);
+	margin-right: calc(50% - 75px);
+	border-radius: 100px;
+
+}
+
+.fotoPequena{
+	width: 30px;
+	height: 30px;
+	object-fit: cover;
+}
+
+h1{
+	text-align: center;
+	-webkit-text-stroke: 1px rgb(99, 31, 105); 
+	text-shadow: 4px 4px 5px rgba(0, 0, 0, 0.8);
+}
+
+body{
+	background-image: url(https://i.pinimg.com/originals/28/a3/a7/28a3a7a6cd60401be390c2cfa02d71d9.gif);
+	background-size: cover;
+	background-repeat: no-repeat;
+}
+
+table{
+	border-radius: 10px;
+}
+
+thead{
+	background-color: #460d4a !important;
+}
+
+tbody{
+	background-color: #e1a1ff !important;
+	color: rgb(99, 71, 30) !important;
+}
+
+input.error{
+    color: inherit !important;
+    border-color: #ced4da !important; /* Cor padrão do Bootstrap */
+    box-shadow: none !important;
+}
+
+.navCustom{
+	background-color: #460d4a;
+}
+
+.fonteClara{
+	color: #e7b4ff;
+}
+
+label{
+	color: #e7b4ff;
+	font-family: "Sunshiney", cursive;
+    font-weight: 400;
+    font-style: normal;
+	font-size: large;
+}
+
+.bonbon-regular {
+  font-family: "Bonbon", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.ruge-boogie-regular {
+  font-family: "Ruge Boogie", cursive;
+  font-weight: 400;
+  font-style: normal;
+}
+.henny-penny-regular {
+  font-family: "Henny Penny", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.sunshiney-regular {
+  	font-family: "Sunshiney", cursive;
+  	font-weight: 400;
+  	font-style: normal;
+  	font-size: large;
+}
